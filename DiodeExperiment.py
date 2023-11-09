@@ -1,6 +1,7 @@
 import pyvisa
 import time
 import math
+import numpy as np
 import matplotlib.pyplot as plt
 from arduino_device import ArduinoVISADevice, list_devices
 
@@ -15,19 +16,18 @@ class DiodeExperiment():
 
     #Loop voor experiment    
     def scan(self):
-        for i in range (0, 2000):
-            self.dev.set_output_value(i)
-            self.List_U_Lamp.append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 voor Ulamp
-            self.List_I_Lamp.append(float(self.dev.get_input_voltage(2) / 220))
-        return self.List_U_Lamp, self.List_I_Lamp
+        self.lst_test = []
+        for j in range (3):
+            self.lst_test.append([])
+            for i in range (0, 1024):
+                self.dev.set_output_value(i)
+                self.List_U_Lamp.append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 voor Ulamp
+                self.List_I_Lamp.append(float(self.dev.get_input_voltage(2) / 220))
+                self.lst_test[j].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2))))
+        
+        #standard deviation 
+        self.std_lst = []
+        for i in range(len(self.lst_test)):
+            self.std_lst.append(float(np.std(self.lst_test[i])))
 
-#Berekent de error met Var / sqrt(N)
-def error(lijst):
-    teller = 0
-    for i in lijst[0]:
-        teller += i
-    gemiddelde = teller / len(lijst[1])
-    var = 0
-    for i in range(1024):
-        var += (lijst[1][i] - gemiddelde)**2
-    return math.sqrt(var) / math.sqrt(1023)
+        return self.List_U_Lamp, self.List_I_Lamp, self.std_lst
