@@ -4,16 +4,17 @@ import math
 import matplotlib.pyplot as plt
 from arduino_device import ArduinoVISADevice, list_devices
 from DiodeExperiment import DiodeExperiment
+
 Begin = DiodeExperiment(7)
 test1 = Begin.scan()
 
-# X, Y, X error en Y error opstellen
+#Assign X, Y, X error en Y error 
 x = test1[0]
 y = test1[1]
 err = test1[2]
 erry = test1[3]
 
-#plotten
+#Plotting the graph
 plt.xlabel("Voltage in [V]")
 plt.ylim
 plt.ylabel("Amperage in [A]")

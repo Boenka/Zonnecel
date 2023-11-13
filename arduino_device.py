@@ -52,5 +52,5 @@ class ArduinoVISADevice():
 #Gives a list of the devices
 def list_devices():
     ports = rm.list_resources()
-    print(ports)
+    return print(ports)
 
