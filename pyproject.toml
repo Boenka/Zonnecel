@@ -15,5 +15,6 @@ pyserial = "^3.5"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+#script to start test
 [tool.poetry.scripts]
 starttest = "pythondaq.view:plot"

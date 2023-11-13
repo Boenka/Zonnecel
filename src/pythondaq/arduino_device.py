@@ -35,10 +35,10 @@ class ArduinoVISADevice():
     #Gets input value for either channel 1 or 2 
     def get_input_value(self,channel_num):
         if channel_num == 1:
-            print(f"The voltage in ADC values for input channel 1 is {self.device.query("MEAS:CH1?")}")
+            #print(f"The voltage in ADC values for input channel 1 is {self.device.query("MEAS:CH1?")}")
             return self.device.query("MEAS:CH1?")
         elif channel_num == 2:
-            print(f"The voltage in ADC values for input channel 2 is {self.device.query("MEAS:CH2?")}")
+            #print(f"The voltage in ADC values for input channel 2 is {self.device.query("MEAS:CH2?")}")
             return self.device.query("MEAS:CH2?")
         else:
             return print("This channel can not be read")
@@ -46,7 +46,7 @@ class ArduinoVISADevice():
     #Converst input ADC value to voltage
     def get_input_voltage(self, port):
         self.a = float(self.device.query(f"MEAS:CH{port}?")) / 1023 * 3.3
-        print(f"The voltage in V for input channel {port} is {round(self.a, 2)}V")
+        #print(f"The voltage in V for input channel {port} is {round(self.a, 2)}V")
         return self.a
 
 #Gives a list of the devices
