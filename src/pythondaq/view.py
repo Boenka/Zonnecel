@@ -9,19 +9,16 @@ from pythondaq.DiodeExperiment import DiodeExperiment
 #Function to make plot so i can use poetry scripts
 def plot():
     Begin = DiodeExperiment(7)
-    test1 = Begin.scan()
+    test1 = Begin.scan(0, 1024, 3)
 
     #Assign X, Y, X error en Y error 
-    x = test1[0]
-    y = test1[1]
-    err = test1[2]
-    erry = test1[3]
+    x, y, err, erry = test1
 
     #Plotting the graph
     plt.xlabel("Voltage in [V]")
     plt.ylim
     plt.ylabel("Amperage in [A]")
-    plt.errorbar(x,y,xerr = err, yerr= erry)
+    plt.errorbar(x ,y ,xerr = err, yerr= erry, linestyle='')
     plt.show()
     return
 

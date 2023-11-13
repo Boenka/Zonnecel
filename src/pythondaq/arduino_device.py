@@ -18,8 +18,8 @@ class ArduinoVISADevice():
 )      
     #Returns the identification string
     def get_identification(self):
-        print(f"The identification string of the port is {self.port}")
-        return self.port
+        print(f"The identification string of the port is {self.device.query("*IDN?")}")
+        return self.device.query("*IDN?")
 
     #Sets the output value 
     def set_output_value(self,value):
@@ -34,12 +34,8 @@ class ArduinoVISADevice():
     
     #Gets input value for either channel 1 or 2 
     def get_input_value(self,channel_num):
-        if channel_num == 1:
-            #print(f"The voltage in ADC values for input channel 1 is {self.device.query("MEAS:CH1?")}")
-            return self.device.query("MEAS:CH1?")
-        elif channel_num == 2:
-            #print(f"The voltage in ADC values for input channel 2 is {self.device.query("MEAS:CH2?")}")
-            return self.device.query("MEAS:CH2?")
+        if channel_num == 1 or 2:
+            return self.device.query(f"MEAS:CH{channel_num}?")
         else:
             return print("This channel can not be read")
     
@@ -53,4 +49,3 @@ class ArduinoVISADevice():
 def list_devices():
     ports = rm.list_resources()
     return print(ports)
-

@@ -18,15 +18,15 @@ class DiodeExperiment():
         self.lst_error_U = []
         self.lst_error_I = []
 
-    #Loop for the experiment
-    def scan(self):
+    #Loop for the experiment rep is equal to the amount of tests
+    def scan(self, start, end, rep):
 
             #Fill the lists with 1024 lists to prepare for mean and std calculations for all the ADC values
-            for i in range (1024):
+            for i in range (start, end):
                 self.lst_lijsten_U.append([])
                 self.lst_lijsten_I.append([])
                 
-                for j in range (3):
+                for j in range (rep):
                     self.dev.set_output_value(i)
                     self.lst_lijsten_U[i].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 for Ulamp
                     self.lst_lijsten_I[i].append(float(self.dev.get_input_voltage(2) / 220)) #Calc I
