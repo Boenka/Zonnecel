@@ -11,23 +11,30 @@ class DiodeExperiment():
     #Maken van lijsten en device voor gebruik in class
     def __init__(self, port):
         self.dev = ArduinoVISADevice(port)
-        self.List_U_Lamp = []
-        self.List_I_Lamp = []
-
+        self.lst_lijsten_U = []
+        self.lst_lijsten_I = []
+        self.lst_mean_U = []
+        self.lst_mean_I = []
+        self.lst_error_U = []
+        self.lst_error_I = []
     #Loop voor experiment    
     def scan(self):
-        self.lst_test = []
-        for j in range (3):
-            self.lst_test.append([])
-            for i in range (0, 1024):
-                self.dev.set_output_value(i)
-                self.List_U_Lamp.append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 voor Ulamp
-                self.List_I_Lamp.append(float(self.dev.get_input_voltage(2) / 220))
-                self.lst_test[j].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2))))
-        
-        #standard deviation 
-        self.std_lst = []
-        for i in range(len(self.lst_test)):
-            self.std_lst.append(float(np.std(self.lst_test[i])))
 
-        return self.List_U_Lamp, self.List_I_Lamp, self.std_lst
+            #Voor de lijsten evenveel lijsten aanmaken als de range om zo gemiddeldes en std uit te kunnen rekenen
+            for i in range (1024):
+                self.lst_lijsten_U.append([])
+                self.lst_lijsten_I.append([])
+                
+                for j in range (3):
+                    self.dev.set_output_value(i)
+                    self.lst_lijsten_U[i].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 voor Ulamp
+                    self.lst_lijsten_I[i].append(float(self.dev.get_input_voltage(2) / 220)) #Stroomsterkte uiterekeken
+
+            #Lijsten vullen met std en gemiddelde waarden.        
+            for i in range(1024):
+                self.lst_mean_U.append(np.mean(self.lst_lijsten_U[i]))
+                self.lst_mean_I.append(np.mean(self.lst_lijsten_I[i]))
+                self.lst_error_U.append(np.std(self.lst_lijsten_U[i]))
+                self.lst_error_I.append(np.std(self.lst_lijsten_I[i]))
+
+            return self.lst_mean_U, self.lst_mean_I, self.lst_error_U, self.lst_error_I
