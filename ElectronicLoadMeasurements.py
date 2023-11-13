@@ -2,7 +2,7 @@
 import pyvisa
 import time
 import matplotlib.pyplot as plt
-from arduino_device import ArduinoVISADevice, list_devices
+from pythondaq.arduino_device import ArduinoVISADevice, list_devices
 
 rm = pyvisa.ResourceManager("@py")
 
