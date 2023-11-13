@@ -6,7 +6,7 @@ from pythondaq.arduino_device import ArduinoVISADevice, list_devices
 from pythondaq.DiodeExperiment import DiodeExperiment
 
 
-
+#Function to make plot so i can use poetry scripts
 def plot():
     Begin = DiodeExperiment(7)
     test1 = Begin.scan()
@@ -24,3 +24,5 @@ def plot():
     plt.errorbar(x,y,xerr = err, yerr= erry)
     plt.show()
     return
+
+#TYPE STARTTEST IN TERMINAL TO START TEST
