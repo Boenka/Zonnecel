@@ -16,4 +16,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-test = "pythondaq.view:plot"
+starttest = "pythondaq.view:plot"
