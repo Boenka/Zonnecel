@@ -2,8 +2,8 @@ import pyvisa
 import time
 import math
 import matplotlib.pyplot as plt
-from arduino_device import ArduinoVISADevice, list_devices
-from DiodeExperiment import DiodeExperiment
+from pythondaq.arduino_device import ArduinoVISADevice, list_devices
+from pythondaq.DiodeExperiment import DiodeExperiment
 
 Begin = DiodeExperiment(7)
 test1 = Begin.scan()
