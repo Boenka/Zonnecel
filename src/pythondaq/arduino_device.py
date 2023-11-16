@@ -1,9 +1,6 @@
 import pyvisa
 import matplotlib.pyplot as plt
 
-rm = pyvisa.ResourceManager("@py")
-
-
 class ArduinoVISADevice():
     
     #Initializing class with correct port
@@ -16,7 +13,7 @@ class ArduinoVISADevice():
 )      
     #Returns the identification string
     def get_identification(self):
-        print(f"The identification string of the port is {self.device.query("*IDN?")}")
+        print(f"The identification string of the port is: {self.device.query("*IDN?")}")
         return self.device.query("*IDN?")
 
     #Sets the output value 
@@ -25,7 +22,7 @@ class ArduinoVISADevice():
         self.list_adc.append(value)
         print(f"The output value has been set to {value}")
 
-    #Gets back the previous output value
+    #Gets back the previous output value MOET AANGEPAST
     def get_ouput_value(self):
         print(f'The previous ouput voltage in ADC values was: {self.list_adc[len(self.list_adc) - 2]}')
         return self.list_adc[len(self.list_adc) - 2]
@@ -45,5 +42,6 @@ class ArduinoVISADevice():
 
 #Gives a list of the devices
 def list_devices():
+    rm = pyvisa.ResourceManager("@py")
     ports = rm.list_resources()
     return print(ports)
