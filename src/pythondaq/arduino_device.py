@@ -1,9 +1,7 @@
 import pyvisa
-import time
 import matplotlib.pyplot as plt
 
 rm = pyvisa.ResourceManager("@py")
-
 
 
 class ArduinoVISADevice():

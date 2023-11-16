@@ -11,6 +11,7 @@ serial = "^0.0.97"
 pyserial = "^3.5"
 pyvisa = "^1.14.0"
 numpy = "^1.26.2"
+matplotlib = "^3.8.1"
 
 
 [build-system]
