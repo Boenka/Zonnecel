@@ -1,22 +1,15 @@
 [tool.poetry]
-name = "pythondaq"
+name = "conda"
 version = "0.1.0"
 description = ""
 authors = ["DionKosterUvA <149403875+DionKosterUvA@users.noreply.github.com>"]
 readme = "README.md"
+packages = [{include = "conda", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-serial = "^0.0.97"
-pyserial = "^3.5"
-pyvisa = "^1.14.0"
-numpy = "^1.26.2"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-#script to start test
-[tool.poetry.scripts]
-starttest = "pythondaq.view:plot"
