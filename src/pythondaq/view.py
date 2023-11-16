@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-from pythondaq.arduino_device import ArduinoVISADevice, list_devices
-from pythondaq.DiodeExperiment import DiodeExperiment
-
+from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
+import csv
 
 #Function to make plot so i can use poetry scripts
 def plot():
@@ -17,6 +16,20 @@ def plot():
     plt.ylabel("Amperage in [A]")
     plt.errorbar(x = U ,y = I ,xerr = err, yerr= erry, linestyle='')
     plt.show()
-    return
+
+    #Save data to csv
+    zipped_data = zip(U,I, err, erry)
+    with open('metingen.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, lineterminator= '\n')
+        writer.writerow([
+            'Voltage in [V]',
+            'Amperage in [A]',
+            'Error on the voltage',
+            'Error on the Amperage'
+        ])
+        writer.writerows(zipped_data)
+
+
+    return csvfile
 
 #TYPE STARTTEST IN TERMINAL TO START TEST
