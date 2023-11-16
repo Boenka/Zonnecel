@@ -18,7 +18,7 @@ def plot():
     plt.errorbar(x = U ,y = I ,xerr = err, yerr= erry, linestyle='')
     plt.show()
 
-    #Save data to csv
+    #Save data to csv file
     zipped_data = zip(U,I, err, erry)
     with open('metingen.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, lineterminator= '\n')
@@ -31,6 +31,6 @@ def plot():
         writer.writerows(zipped_data)
 
 
-    return csvfile
+    return 
 
 #TYPE STARTTEST IN TERMINAL TO START TEST

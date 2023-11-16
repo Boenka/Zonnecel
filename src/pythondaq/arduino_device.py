@@ -13,7 +13,7 @@ class ArduinoVISADevice():
 )      
     #Returns the identification string
     def get_identification(self):
-        print(f"The identification string of the port is: {self.device.query("*IDN?")}")
+        print(f"The identification string of the port is: {self.device.query('*IDN?')}")
         return self.device.query("*IDN?")
 
     #Sets the output value 
@@ -22,10 +22,10 @@ class ArduinoVISADevice():
         self.list_adc.append(value)
         print(f"The output value has been set to {value}")
 
-    #Gets back the previous output value MOET AANGEPAST
+    #Gets back the previous output value
     def get_ouput_value(self):
-        print(f'The previous ouput voltage in ADC values was: {self.list_adc[len(self.list_adc) - 2]}')
-        return self.list_adc[len(self.list_adc) - 2]
+        print(f'The previous ouput voltage in ADC values was: {self.device.query(f"OUT:CH0?")}')
+        return self.device.query(f"OUT:CH0?")
     
     #Gets input value for either channel 1 or 2 
     def get_input_value(self,channel_num):

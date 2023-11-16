@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from pythondaq.arduino_device import ArduinoVISADevice, list_devices
 
 #Class for the experiment
