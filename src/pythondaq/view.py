@@ -41,5 +41,4 @@ def plot():
 
 
     return 
-
 #TYPE STARTTEST IN TERMINAL TO START TEST

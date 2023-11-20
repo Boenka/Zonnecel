@@ -7,7 +7,7 @@ class DiodeExperiment():
     """
     Initializing a class to set up different experiments.
     """
-
+    
     #Making lists that will be used
     def __init__(self, port):
 
@@ -25,6 +25,9 @@ class DiodeExperiment():
         self.lst_mean_I = []
         self.lst_error_U = []
         self.lst_error_I = []
+
+    def iden(self):
+        return self.dev.get_identification()
 
     #Loop for the experiment rep is equal to the amount of tests
     def scan(self, start, end, rep):
@@ -44,19 +47,20 @@ class DiodeExperiment():
         for i in range (start, end):
             self.lst_lists_U.append([])
             self.lst_lists_I.append([])
-                
+               
             for j in range (rep):
                 self.dev.set_output_value(i)
                 self.lst_lists_U[i].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 for Ulamp
                 self.lst_lists_I[i].append(float(self.dev.get_input_voltage(2) / 220)) #Calc I
 
             #Fill the mean and error lists      
-            for i in range(1024):
-                self.lst_mean_U.append(np.mean(self.lst_lists_U[i]))
-                self.lst_mean_I.append(np.mean(self.lst_lists_I[i]))
-                self.lst_error_U.append(np.std(self.lst_lists_U[i]))
-                self.lst_error_I.append(np.std(self.lst_lists_I[i]))
+        for i in range(start,end):
+            self.lst_mean_U.append(np.mean(self.lst_lists_U[i]))
+            self.lst_mean_I.append(np.mean(self.lst_lists_I[i]))
+            self.lst_error_U.append(np.std(self.lst_lists_U[i]))
+            self.lst_error_I.append(np.std(self.lst_lists_I[i]))
 
-            self.dev.set_output_value(0)
+        self.dev.set_output_value(0)
 
-            return self.lst_mean_U, self.lst_mean_I, self.lst_error_U, self.lst_error_I
+        return self.lst_mean_U, self.lst_mean_I, self.lst_error_U, self.lst_error_I
+

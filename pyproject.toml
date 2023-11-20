@@ -20,5 +20,5 @@ build-backend = "poetry.core.masonry.api"
 
 #script to start test
 [tool.poetry.scripts]
+diode = "pythondaq.cli:cmd_group"
 starttest = "pythondaq.view:plot"
-lll = "pythondaq.cli:cmd_group"

@@ -92,12 +92,6 @@ class ArduinoVISADevice():
 
 #Gives a list of the devices
 def list_devices():
-
-    """
-    Lists the devices currently connected to the computer and prints the port numbers
-
-    """
-    
     rm = pyvisa.ResourceManager("@py")
     ports = rm.list_resources()
     return print(ports)
