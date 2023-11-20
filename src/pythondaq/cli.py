@@ -4,7 +4,7 @@ import numpy as np
 from numpy import pi
 import csv
 import pyvisa 
-from pythondaq.DiodeExperiment import DiodeExperiment
+from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
 
 @click.group()
 def cmd_group():
@@ -82,11 +82,12 @@ def scan(port, start, end, rep, graph, hold):
 
         return
 
+
+
 @cmd_group.command()
 def list():
-    rm = pyvisa.ResourceManager("@py")
-    ports = rm.list_resources()
-    return print(ports)
+    return list_devices()
+
 
 @cmd_group.command()
 @click.option(
@@ -97,14 +98,21 @@ def list():
 )
 
 def info(port):
-    """Calculate the tan up until input.
+    
+    """
+    Calculate the tan up until input.
 
     Args:
         number (int): 0 - 2*pi
+
     """
-    Begin = DiodeExperiment(port)
-    
-    return print(Begin.iden())
+
+    if port is None:
+        return print("Give a value for the port with 'diode scan -p [value]'")
+
+    else:
+        Begin = DiodeExperiment(port)
+        return print(Begin.iden())
 
 if __name__ == "__main__":
     cmd_group()
