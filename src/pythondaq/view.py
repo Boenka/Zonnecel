@@ -5,6 +5,15 @@ from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
 
 #Function to make plot so i can use poetry scripts
 def plot():
+
+    """
+    Initialize a DiodeExperiment class with the correct port. Create test whith parameters scan(start,end,rep). 
+    Plot an errorbar with U values of the lamp on the x-axis and I values on the y-axis and the correct std lists for the errorbars. (also hides line between points)
+    Shows the plot to the user. 
+
+    Also saves the data from the test in a CSV file
+    """
+    
     Begin = DiodeExperiment(9)
     test1 = Begin.scan(0, 1024, 3)
 
