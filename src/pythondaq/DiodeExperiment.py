@@ -6,6 +6,7 @@ class DiodeExperiment():
 
     """
     Initializing a class to set up different experiments.
+
     """
     
     #Making lists that will be used
@@ -16,6 +17,7 @@ class DiodeExperiment():
 
         Args:
         port (int) = the number of the port on which the arduino is connected.
+
         """
 
         self.dev = ArduinoVISADevice(port)
@@ -25,6 +27,7 @@ class DiodeExperiment():
         self.lst_mean_I = []
         self.lst_error_U = []
         self.lst_error_I = []
+        self.lst_tot = []
 
     def iden(self):
         return self.dev.get_identification()
@@ -41,13 +44,15 @@ class DiodeExperiment():
         start (int) : the ADC value at which the scan starts
         end (int)   : the ADC value at which the scan end
         rep (int)   : the amount of repetitions of the scan for caluclations of mean and std
+        
         """
         
             #Fill the lists with 1024 lists to prepare for mean and std calculations for all the ADC values
-        for i in range (start, end):
+        for k in range (1024):
             self.lst_lists_U.append([])
             self.lst_lists_I.append([])
-               
+            
+        for i in range(start, end):       
             for j in range (rep):
                 self.dev.set_output_value(i)
                 self.lst_lists_U[i].append(float(self.dev.get_input_voltage(1) - float(self.dev.get_input_voltage(2)))) #U1 - U2 for Ulamp

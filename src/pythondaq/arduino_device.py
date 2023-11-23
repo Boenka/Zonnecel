@@ -16,6 +16,7 @@ class ArduinoVISADevice():
 
         Args:
         p (int) = the port the arduino is connected to
+        
         """
 
         self.rm = pyvisa.ResourceManager("@py")
@@ -42,7 +43,7 @@ class ArduinoVISADevice():
         Sets the output value of the arduino 
 
         Args:
-        value (int): integer value between 0 and 1023
+        value (int): integer ADC value between 0 and 1023
 
         """
 
@@ -69,6 +70,7 @@ class ArduinoVISADevice():
 
         Args:
         channel_num (int) = the number of the channel you want to read (either 1 or 2)
+
         """
 
         if channel_num == 1 or 2:
@@ -84,6 +86,7 @@ class ArduinoVISADevice():
 
         Args:
         channel_num = the number of the channel you want to read (either 1 or 2)
+
         """
 
         self.a = float(self.device.query(f"MEAS:CH{channel_num}?")) / 1023 * 3.3
@@ -92,6 +95,10 @@ class ArduinoVISADevice():
 
 #Gives a list of the devices
 def list_devices():
+    """
+    Returns a print of the ports on this device
+
+    """
     rm = pyvisa.ResourceManager("@py")
     ports = rm.list_resources()
     return print(ports)

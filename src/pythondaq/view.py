@@ -14,7 +14,7 @@ def plot():
     Also saves the data from the test in a CSV file
     """
     
-    Begin = DiodeExperiment(9)
+    Begin = DiodeExperiment(7)
     test1 = Begin.scan(0, 1024, 3)
 
     #Assign X, Y, X error en Y error 

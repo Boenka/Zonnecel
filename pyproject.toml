@@ -6,12 +6,14 @@ authors = ["DionKosterUvA <149403875+DionKosterUvA@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-serial = "^0.0.97"
+python = "^3.10"
 pyserial = "^3.5"
 pyvisa = "^1.14.0"
 numpy = "^1.26.2"
 matplotlib = "^3.8.1"
+click = "^8.1.7"
+pyvisa-py = "^0.7.1"
+pandas = "^2.1.3"
 
 
 [build-system]
