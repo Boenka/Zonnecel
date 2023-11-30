@@ -70,7 +70,7 @@ class UserInterface(QtWidgets.QMainWindow):
         #Create a spinbox for the rep button and set the standard value, the range and the size of the steps. Add to hbox.
         self.rep_button = QtWidgets.QSpinBox()
         self.rep_button.setValue(2)
-        self.rep_button.setRange(0,1001)
+        self.rep_button.setRange(2,20)
         self.rep_button.setSingleStep(1)
         hbox.addWidget(self.rep_button)
         
@@ -81,6 +81,7 @@ class UserInterface(QtWidgets.QMainWindow):
         #Connect the functions to the button created above
         self.plot_QpushButton.clicked.connect(self.plot)
         self.save_QPushButton.clicked.connect(self.save)
+        
     
     @Slot()
     def plot(self):
@@ -92,8 +93,8 @@ class UserInterface(QtWidgets.QMainWindow):
 
         """
         
-        Begin = DiodeExperiment(self.list_ports[self.combo.currentIndex()])
-        test1 = Begin.scan(int(self.start_Qspinbox.value() / 3.3 * 1024), int(self.stop_Qspinbox.value() / 3.3 * 1024), self.rep_button.value())
+        self.begin = DiodeExperiment(self.list_ports[self.combo.currentIndex()])
+        test1 = self.begin.scan(int(self.start_Qspinbox.value() / 3.3 * 1024), int(self.stop_Qspinbox.value() / 3.3 * 1024), self.rep_button.value())
 
         #Assign X, Y, X error en Y error 
         self.U, self.I, self.err, self.erry = test1
@@ -109,6 +110,7 @@ class UserInterface(QtWidgets.QMainWindow):
         height = 2 * np.array(self.erry)
         error_bars = pg.ErrorBarItem(x=xval, y=yval, width = width, height=height, pen = {"color":"black", "width": 2})
         self.graphWidget.addItem(error_bars)
+        self.begin.close()
 
     def save(self):
 

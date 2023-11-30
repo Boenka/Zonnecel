@@ -94,6 +94,9 @@ class ArduinoVISADevice():
         #print(f"The voltage in V for input channel {port} is {round(self.a, 2)}V")
         return self.a
 
+    def close(self):
+        self.device.close()
+
 #Gives a list of the devices
 def list_devices():
     lsta = []
