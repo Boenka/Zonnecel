@@ -68,8 +68,6 @@ class DiodeExperiment():
             self.lst_error_U.append(np.std(self.lst_lists_U[i]))
             self.lst_error_I.append(np.std(self.lst_lists_I[i]))
 
-        print(self.lst_mean_I)
-
         self.dev.set_output_value(0)
 
         return self.lst_mean_U, self.lst_mean_I, self.lst_error_U, self.lst_error_I
