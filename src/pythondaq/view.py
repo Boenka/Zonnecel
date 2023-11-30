@@ -2,7 +2,7 @@ import csv
 
 import matplotlib.pyplot as plt
 
-from pythondaq.DiodeExperiment import DiodeExperiment, list_devices_noprint
+from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
 
 
 #Function to make plot so i can use poetry scripts
@@ -43,4 +43,5 @@ def plot():
 
 
     return 
+
 #TYPE STARTTEST IN TERMINAL TO START TEST

@@ -1,22 +1,26 @@
 import csv
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pyqtgraph as pg
-from numpy import pi
 from PySide6 import QtWidgets
 from PySide6.QtCore import Slot
 
 from pythondaq.DiodeExperiment import DiodeExperiment, list_devices_noprint
 
+## TYPE APP IN TERMINAL TO START PROGRAM
 
+#Create a class for the user interface
 class UserInterface(QtWidgets.QMainWindow):
+    
     def __init__(self):
+        # roep de __init__() aan van de parent class
         super().__init__()
 
-        self.lstports = list_devices_noprint()
+        #Create a lists of the ports currently connected
+        self.list_ports = list_devices_noprint()
 
+        #Create and select the central widget. Create the graphWidget to plot and add to the vbox. Create two horizontal boxes and one vertical box to add widgets to.
         central_widget = QtWidgets.QWidget()
         self.graphWidget = pg.PlotWidget()
         self.setCentralWidget(central_widget)
@@ -28,6 +32,7 @@ class UserInterface(QtWidgets.QMainWindow):
         hbox = QtWidgets.QHBoxLayout()
         vbox.addLayout(hbox)
 
+        #Create the labels and add them to the h2box above the widgets in the hbox
         h2box.addWidget(QtWidgets.QLabel('select port'))
         h2box.addWidget(QtWidgets.QLabel('create plot'))
         h2box.addWidget(QtWidgets.QLabel('start ADC'))
@@ -35,40 +40,44 @@ class UserInterface(QtWidgets.QMainWindow):
         h2box.addWidget(QtWidgets.QLabel('num reps'))
         h2box.addWidget(QtWidgets.QLabel('save file'))
         
+        #Create the options for the combobox and add the combobox to the hbox
         self.combo = QtWidgets.QComboBox()
-        for i in range(len(self.lstports)):
-            self.combo.addItem(str(self.lstports[i]))
-        
-
+        for i in range(len(self.list_ports)):
+            self.combo.addItem(str(self.list_ports[i]))
         hbox.addWidget(self.combo)
 
-        self.plot_button = QtWidgets.QPushButton("plot")
-        hbox.addWidget(self.plot_button)
+        #Create a push button and add it to the hbox
+        self.plot_QpushButton = QtWidgets.QPushButton("plot")
+        hbox.addWidget(self.plot_QpushButton)
 
-        self.start_button = QtWidgets.QSpinBox()
-        self.start_button.setValue(0)
-        self.start_button.setRange(0, 1024)
-        self.start_button.setSingleStep(1)
-        hbox.addWidget(self.start_button)
+        #Create a spinbox for the start button and set the standard value, the range and the size of the steps. Add to hbox.
+        self.start_Qspinbox = QtWidgets.QSpinBox()
+        self.start_Qspinbox.setValue(0)
+        self.start_Qspinbox.setRange(0, 1024)
+        self.start_Qspinbox.setSingleStep(1)
+        hbox.addWidget(self.start_Qspinbox)
 
-        self.stop_button = QtWidgets.QSpinBox()
-        self.stop_button.setValue(100)
-        self.stop_button.setRange(0, 1024)
-        self.stop_button.setSingleStep(1)
-        hbox.addWidget(self.stop_button)
-
+        #Create a spinbox for the stop button and set the standard value, the range and the size of the steps. Add to hbox.
+        self.stop_Qspinbox = QtWidgets.QSpinBox()
+        self.stop_Qspinbox.setValue(100)
+        self.stop_Qspinbox.setRange(0, 1024)
+        self.stop_Qspinbox.setSingleStep(1)
+        hbox.addWidget(self.stop_Qspinbox)
+        
+        #Create a spinbox for the rep button and set the standard value, the range and the size of the steps. Add to hbox.
         self.rep_button = QtWidgets.QSpinBox()
         self.rep_button.setValue(2)
         self.rep_button.setRange(0,1001)
         self.rep_button.setSingleStep(1)
         hbox.addWidget(self.rep_button)\
         
-        self.save_button = QtWidgets.QPushButton("SAVE")
-        hbox.addWidget(self.save_button)
+        #Create a button to save the file and add it to the hbox
+        self.save_QPushButton = QtWidgets.QPushButton("SAVE")
+        hbox.addWidget(self.save_QPushButton)
 
-
-        self.plot_button.clicked.connect(self.plot)
-        self.save_button.clicked.connect(self.save)
+        #Connect the functions to the button created above
+        self.plot_QpushButton.clicked.connect(self.plot)
+        self.save_QPushButton.clicked.connect(self.save)
     
     @Slot()
     def plot(self):
@@ -78,11 +87,10 @@ class UserInterface(QtWidgets.QMainWindow):
         Plot an errorbar with U values of the lamp on the x-axis and I values on the y-axis and the correct std lists for the errorbars. (also hides line between points)
         Shows the plot to the user. 
 
-        Also saves the data from the test in a CSV file
         """
         
-        Begin = DiodeExperiment(self.lstports[self.combo.currentIndex()])
-        test1 = Begin.scan(self.start_button.value(), self.stop_button.value(), self.rep_button.value())
+        Begin = DiodeExperiment(self.list_ports[self.combo.currentIndex()])
+        test1 = Begin.scan(self.start_Qspinbox.value(), self.stop_Qspinbox.value(), self.rep_button.value())
 
         #Assign X, Y, X error en Y error 
         self.U, self.I, self.err, self.erry = test1
@@ -100,9 +108,14 @@ class UserInterface(QtWidgets.QMainWindow):
         self.graphWidget.addItem(error_bars)
 
     def save(self):
+
+        """
+        Saves the data to a CSV file with a name of choice. The filename can be typed in the application.
+        """
+
         filename, _ = QtWidgets.QFileDialog.getSaveFileName(filter="CSV files (*.csv)")
 
-                #Save data to csv file
+        #Save data to csv file
         zipped_data = zip(self.U,self.I, self.err, self.erry)
         with open(f'{filename}', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, lineterminator= '\n')
@@ -115,7 +128,7 @@ class UserInterface(QtWidgets.QMainWindow):
             writer.writerows(zipped_data)
 
 
-
+#Start the program
 def main():
     app = QtWidgets.QApplication(sys.argv)
     ui = UserInterface()
