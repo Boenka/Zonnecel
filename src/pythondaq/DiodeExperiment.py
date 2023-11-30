@@ -1,5 +1,8 @@
 import numpy as np
-from pythondaq.arduino_device import ArduinoVISADevice, list_devices
+
+from pythondaq.arduino_device import (ArduinoVISADevice, list_devices,
+                                      list_devices_noprint)
+
 
 #Class for the experiment
 class DiodeExperiment():
@@ -64,6 +67,8 @@ class DiodeExperiment():
             self.lst_mean_I.append(np.mean(self.lst_lists_I[i]))
             self.lst_error_U.append(np.std(self.lst_lists_U[i]))
             self.lst_error_I.append(np.std(self.lst_lists_I[i]))
+
+        print(self.lst_mean_I)
 
         self.dev.set_output_value(0)
 

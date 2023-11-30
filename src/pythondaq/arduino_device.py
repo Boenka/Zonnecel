@@ -1,5 +1,6 @@
-import pyvisa
 import matplotlib.pyplot as plt
+import pyvisa
+
 
 class ArduinoVISADevice():
 
@@ -20,7 +21,7 @@ class ArduinoVISADevice():
         """
 
         self.rm = pyvisa.ResourceManager("@py")
-        self.port = f"ASRL{p}::INSTR"
+        self.port = p
         self.list_adc = [] 
         self.device = self.rm.open_resource(
     f"{self.port}", read_termination="\r\n", write_termination="\n"
@@ -95,10 +96,26 @@ class ArduinoVISADevice():
 
 #Gives a list of the devices
 def list_devices():
+    lsta = []
     """
     Returns a print of the ports on this device
 
     """
     rm = pyvisa.ResourceManager("@py")
     ports = rm.list_resources()
-    return print(ports)
+    for i in ports:
+        lsta.append(str(i))
+    print(lsta)
+    return lsta
+
+def list_devices_noprint():
+    lsta = []
+    """
+    Returns a print of the ports on this device
+
+    """
+    rm = pyvisa.ResourceManager("@py")
+    ports = rm.list_resources()
+    for i in ports:
+        lsta.append(str(i))
+    return lsta

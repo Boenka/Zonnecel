@@ -1,6 +1,8 @@
-import matplotlib.pyplot as plt
 import csv
-from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
+
+import matplotlib.pyplot as plt
+
+from pythondaq.DiodeExperiment import DiodeExperiment, list_devices_noprint
 
 
 #Function to make plot so i can use poetry scripts
@@ -14,7 +16,7 @@ def plot():
     Also saves the data from the test in a CSV file
     """
     
-    Begin = DiodeExperiment(7)
+    Begin = DiodeExperiment("ASRL7::INSTR")
     test1 = Begin.scan(0, 1024, 3)
 
     #Assign X, Y, X error en Y error 
