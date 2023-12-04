@@ -98,7 +98,7 @@ def list():
 
 @cmd_group.command()
 @click.option(
-    "-n",
+    "-p",
     "--port",
     default= None,
     show_default=True,  # show default in help
