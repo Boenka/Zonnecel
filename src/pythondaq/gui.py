@@ -30,18 +30,18 @@ class UserInterface(QtWidgets.QMainWindow):
         vbox = QtWidgets.QVBoxLayout(central_widget)
         vbox.addWidget(self.graphWidget)
         
-        h2box = QtWidgets.QHBoxLayout()
-        vbox.addLayout(h2box)
+        hbox2 = QtWidgets.QHBoxLayout()
+        vbox.addLayout(hbox2)
         hbox = QtWidgets.QHBoxLayout()
         vbox.addLayout(hbox)
 
-        #Create the labels and add them to the h2box above the widgets in the hbox
-        h2box.addWidget(QtWidgets.QLabel('select port'))
-        h2box.addWidget(QtWidgets.QLabel('create plot'))
-        h2box.addWidget(QtWidgets.QLabel('start [V]'))
-        h2box.addWidget(QtWidgets.QLabel('stop [V]'))
-        h2box.addWidget(QtWidgets.QLabel('num reps'))
-        h2box.addWidget(QtWidgets.QLabel('save file'))
+        #Create the labels and add them to the hbox2 above the widgets in the hbox
+        hbox2.addWidget(QtWidgets.QLabel('select port'))
+        hbox2.addWidget(QtWidgets.QLabel('create plot'))
+        hbox2.addWidget(QtWidgets.QLabel('start [V]'))
+        hbox2.addWidget(QtWidgets.QLabel('stop [V]'))
+        hbox2.addWidget(QtWidgets.QLabel('num reps'))
+        hbox2.addWidget(QtWidgets.QLabel('save file'))
         
         #Create the options for the combobox and add the combobox to the hbox
         self.combo = QtWidgets.QComboBox()
@@ -68,11 +68,11 @@ class UserInterface(QtWidgets.QMainWindow):
         hbox.addWidget(self.stop_Qspinbox)
         
         #Create a spinbox for the rep button and set the standard value, the range and the size of the steps. Add to hbox.
-        self.rep_button = QtWidgets.QSpinBox()
-        self.rep_button.setValue(2)
-        self.rep_button.setRange(2,20)
-        self.rep_button.setSingleStep(1)
-        hbox.addWidget(self.rep_button)
+        self.rep_Qspinbox = QtWidgets.QSpinBox()
+        self.rep_Qspinbox.setValue(2)
+        self.rep_Qspinbox.setRange(2,20)
+        self.rep_Qspinbox.setSingleStep(1)
+        hbox.addWidget(self.rep_Qspinbox)
         
         #Create a button to save the file and add it to the hbox
         self.save_QPushButton = QtWidgets.QPushButton("SAVE")
@@ -93,11 +93,12 @@ class UserInterface(QtWidgets.QMainWindow):
 
         """
         
-        self.begin = DiodeExperiment(self.list_ports[self.combo.currentIndex()])
-        test1 = self.begin.scan(int(self.start_Qspinbox.value() / 3.3 * 1024), int(self.stop_Qspinbox.value() / 3.3 * 1024), self.rep_button.value())
+        #Create the instance of the experiment
+        self.DiodeEx1 = DiodeExperiment(self.list_ports[self.combo.currentIndex()])
+        DiodeEx1_scan = self.DiodeEx1.scan(int(self.start_Qspinbox.value() / 3.3 * 1024), int(self.stop_Qspinbox.value() / 3.3 * 1024), self.rep_Qspinbox.value())
 
         #Assign X, Y, X error en Y error 
-        self.U, self.I, self.err, self.erry = test1
+        self.U, self.I, self.err, self.erry = DiodeEx1_scan
 
         #Plotting the graph
         self.graphWidget.plot(self.U, self.I, symbol=None, pen={"color": "white", "width": 5})
@@ -110,7 +111,7 @@ class UserInterface(QtWidgets.QMainWindow):
         height = 2 * np.array(self.erry)
         error_bars = pg.ErrorBarItem(x=xval, y=yval, width = width, height=height, pen = {"color":"black", "width": 2})
         self.graphWidget.addItem(error_bars)
-        self.begin.close()
+        self.DiodeEx1.close()
 
     def save(self):
 
@@ -135,6 +136,9 @@ class UserInterface(QtWidgets.QMainWindow):
 
 #Start the program
 def main():
+    """
+    Starts up the gui.
+    """
     app = QtWidgets.QApplication(sys.argv)
     ui = UserInterface()
     ui.show()

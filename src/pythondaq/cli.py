@@ -1,8 +1,11 @@
+import csv
+
 import click
 import matplotlib.pyplot as plt
-import csv
 import pandas as pd
+
 from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
+
 
 @click.group()
 def cmd_group():
@@ -63,7 +66,7 @@ def scan(port, start, end, rep, graph, output):
         print(df)
 
         if output is not None:
-            zipped_data = zip(test1[0],test1[1])
+            zipped_data = zip(test1[0],test1[1], test1[2], test1[3])
             with open(f'{output}.csv', 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile, lineterminator= '\n')
                 writer.writerow([
@@ -73,6 +76,7 @@ def scan(port, start, end, rep, graph, output):
                     'Error on the Amperage'
                 ])
                 writer.writerows(zipped_data)
+
 
         if graph:
             plt.xlabel("Voltage in [V]")
@@ -105,6 +109,8 @@ def info(port):
     
     """
     Prints the identification string of the device connected
+
+    arg = the port you want info on (int)
     """
 
     if port is None or not int:

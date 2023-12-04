@@ -37,7 +37,6 @@ class DiodeExperiment():
     def iden(self):
         return self.dev.get_identification()
 
-    #Loop for the experiment rep is equal to the amount of tests
     def scan(self, start, end, rep):
 
         """
@@ -71,7 +70,7 @@ class DiodeExperiment():
             self.lst_error_I.append(np.std(self.lst_lists_I[i]))
 
 
-
+        #turn off lamp
         self.dev.set_output_value(0)
         
 
