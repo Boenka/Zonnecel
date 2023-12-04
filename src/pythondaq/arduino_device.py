@@ -5,7 +5,7 @@ import pyvisa
 class ArduinoVISADevice():
 
     """
-    Initialize a class for the arduino device
+    Initialize ADC_to_V class for the arduino device
 
     """
 
@@ -13,7 +13,7 @@ class ArduinoVISADevice():
     def __init__(self, p):
 
         """
-        Initialize a connection with the device and read and write prefrences
+        Initialize ADC_to_V connection with the device and read and write prefrences
 
         Args:
         p (int) = the port the arduino is connected to
@@ -83,25 +83,25 @@ class ArduinoVISADevice():
     def get_input_voltage(self, channel_num):
 
         """
-        Returns the input value as a voltage in [V].
+        Returns the input value as ADC_to_V voltage in [V].
 
         Args:
         channel_num = the number of the channel you want to read (either 1 or 2)
 
         """
 
-        self.a = float(self.device.query(f"MEAS:CH{channel_num}?")) / 1023 * 3.3
-        #print(f"The voltage in V for input channel {port} is {round(self.a, 2)}V")
-        return self.a
+        self.ADC_to_V = float(self.device.query(f"MEAS:CH{channel_num}?")) / 1023 * 3.3
+        #print(f"The voltage in V for input channel {port} is {round(self.ADC_to_V, 2)}V")
+        return self.ADC_to_V
 
     def close(self):
         self.device.close()
 
-#Gives a list of the devices
+#Gives ADC_to_V list of the devices
 def list_devices():
     lsta = []
     """
-    Returns a print of the ports on this device
+    Returns ADC_to_V print of the ports on this device
 
     """
     rm = pyvisa.ResourceManager("@py")
@@ -114,7 +114,7 @@ def list_devices():
 def list_devices_noprint():
     lsta = []
     """
-    Returns a print of the ports on this device
+    Returns ADC_to_V print of the ports on this device
 
     """
     rm = pyvisa.ResourceManager("@py")

@@ -23,6 +23,7 @@ def cmd_group():
     "-s",
     "--start",
     default= 0.0,
+    type = click.FloatRange(0, 3.3),
     show_default=True,  # show default in help
     help = 'the volt value from which to start the experiment (value between 0-3.3)'
 )
@@ -30,6 +31,7 @@ def cmd_group():
     "-e",
     "--end",
     default= 3.3,
+    type = click.FloatRange(0, 3.3),
     show_default=True,  # show default in help
     help = 'the volt value at which to end the experiment (value between 0-3.3)'
 )
@@ -110,7 +112,8 @@ def info(port):
     """
     Prints the identification string of the device connected
 
-    arg = the port you want info on (int)
+    Args:
+    port = the port you want info on. (full string from list_devices)
     """
 
     if port is None or not int:

@@ -31,10 +31,17 @@ class DiodeExperiment():
         self.lst_error_U = []
         self.lst_error_I = []
         self.lst_tot = []
+
     def close(self):
+        """
+        Closes the device
+        """
         self.dev.close()
 
     def iden(self):
+        """
+        Returns the identification string
+        """
         return self.dev.get_identification()
 
     def scan(self, start, end, rep):
