@@ -6,7 +6,7 @@ import pyqtgraph as pg
 from PySide6 import QtWidgets
 from PySide6.QtCore import Slot
 
-from pythondaq.DiodeExperiment import DiodeExperiment, list_devices_noprint
+from Zonnecel.zonnecelcalc import DiodeExperiment, list_devices_noprint
 
 ## TYPE STARTAPP IN TERMINAL TO START PROGRAM
 
@@ -147,3 +147,8 @@ def main():
 
 if __name__ == "__main__":
     main()  
+
+#Spanning variabele weerstand tegen spanning zonnecel
+#UI karakteristiek van de zonnecel
+#PR grafiek van de zonnecel
+

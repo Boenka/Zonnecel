@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
-import pyvisa
+try:
+    from nsp2visasim import sim_pyvisa as pyvisa
+except ModuleNotFoundError:
+    import pyvisa
 
 
 class ArduinoVISADevice():
@@ -108,7 +111,7 @@ def list_devices():
     ports = rm.list_resources()
     for i in ports:
         lsta.append(str(i))
-    print(lsta)
+    #print(lsta)
     return lsta
 
 def list_devices_noprint():
@@ -122,3 +125,5 @@ def list_devices_noprint():
     for i in ports:
         lsta.append(str(i))
     return lsta
+
+list_devices()

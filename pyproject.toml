@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pythondaq"
+name = "Zonnecel"
 version = "0.1.0"
 description = ""
 authors = ["DionKosterUvA <149403875+DionKosterUvA@users.noreply.github.com>"]
@@ -15,7 +15,12 @@ click = "^8.1.7"
 pyvisa-py = "^0.7.1"
 pandas = "^2.1.3"
 pyside6 = "^6.6.0"
+pyqtgraph = "^0.13.3"
+scipy = "^1.11.4"
 
+
+[tool.poetry.group.dev.dependencies]
+nsp2visasim = "^1.3.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -2,7 +2,7 @@ import csv
 
 import matplotlib.pyplot as plt
 
-from pythondaq.DiodeExperiment import DiodeExperiment, list_devices
+from Zonnecel.zonnecelcalc import DiodeExperiment, list_devices
 
 
 #Function to make plot so i can use poetry scripts
@@ -16,18 +16,25 @@ def plot():
     Also saves the data from the test in a CSV file
     """
     
-    Begin = DiodeExperiment("ASRL7::INSTR")
-    test1 = Begin.scan(0, 1024, 3)
+    Begin = DiodeExperiment('ASRL::SIMPV_BRIGHT::INSTR')
+    test1 = Begin.scan(0, 1024, 2)
 
     #Assign X, Y, X error en Y error 
-    U, I, err, erry = test1
+    U, I, err, erry, P, R = test1
 
     #Plotting the graph
+    plt.figure("1")
     plt.xlabel("Voltage in [V]")
-    plt.ylim
     plt.ylabel("Amperage in [A]")
-    plt.errorbar(x = U ,y = I ,xerr = err, yerr= erry, linestyle='')
+    plt.errorbar(x = U ,y = I ,xerr = err, yerr= erry, linestyle='', marker='o')
     plt.show()
+
+    plt.figure('2')
+    plt.xlabel("Resistance in [R]")
+    plt.ylabel("Power in [P]")
+    plt.scatter(x = R ,y = P , linestyle='', marker='o')
+    plt.show()
+
 
     #Save data to csv file
     zipped_data = zip(U,I, err, erry)
@@ -45,3 +52,4 @@ def plot():
     return 
 
 #TYPE STARTTEST IN TERMINAL TO START TEST
+plot()
